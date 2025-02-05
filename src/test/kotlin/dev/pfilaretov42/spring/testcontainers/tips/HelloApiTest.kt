@@ -1,11 +1,15 @@
 package dev.pfilaretov42.spring.testcontainers.tips
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class HelloApiTest : AppAbstractTest() {
+
     @Test
     fun `test stop container`() {
         println("api test")
+        val list = testRestTemplate.getForObject(helloEndpointUrl, List::class.java)
+        assertThat(list.isEmpty())
     }
 
     // add db record 1
