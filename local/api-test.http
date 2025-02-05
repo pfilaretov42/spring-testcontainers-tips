@@ -1,0 +1,10 @@
+### GET all
+GET http://localhost:8080/hello
+
+### add
+POST http://localhost:8080/hello
+Content-Type: application/json
+
+{
+  "name": "Hello-2"
+}
