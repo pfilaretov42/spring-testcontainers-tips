@@ -1,5 +1,6 @@
 package dev.pfilaretov42.spring.testcontainers.tips
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -12,9 +13,8 @@ import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 
-//@Import(TestcontainersConfiguration::class)
-//@ActiveProfiles("test")
-//@ContextConfiguration(classes = [TestcontainersConfiguration::class])
+private val logger = KotlinLogging.logger {}
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 abstract class AppAbstractTest {
 
@@ -35,14 +35,21 @@ abstract class AppAbstractTest {
         private val postgresContainer = PostgreSQLContainer(DockerImageName.parse("postgres:17"))
 
         init {
-            println("=== STARTING CONTAINER ===")
+            logger.info { "STARTING CONTAINER" }
             postgresContainer.start()
+        }
+
+        @JvmStatic
+        @AfterAll
+        fun tearDown() {
+            logger.info { "STOPPING CONTAINER" }
+            postgresContainer.stop()
         }
 
 //        @JvmStatic
 //        @BeforeAll
 //        fun setUp() {
-//            println("=== STARTING CONTAINER ===")
+//            logger.info { "STARTING CONTAINER" }
 //            postgresContainer.start()
 //        }
 
@@ -54,12 +61,7 @@ abstract class AppAbstractTest {
             registry.add("spring.datasource.password") { postgresContainer.password }
         }
 
-        @JvmStatic
-        @AfterAll
-        fun tearDown() {
-            println("=== STOPPING CONTAINER ===")
-            postgresContainer.stop()
-        }
+
     }
 }
 
