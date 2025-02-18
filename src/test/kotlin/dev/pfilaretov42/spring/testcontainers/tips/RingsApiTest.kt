@@ -2,19 +2,29 @@ package dev.pfilaretov42.spring.testcontainers.tips
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 private val logger = KotlinLogging.logger {}
 
-class HelloApiTest : AppAbstractTest() {
+class RingsApiTest : AppAbstractTest() {
 
+    protected lateinit var ringsEndpointUrl: String
+
+    @BeforeEach
+    fun setUp() {
+        ringsEndpointUrl = "http://localhost:$port/rings"
+    }
+
+    // TODO - drop it
     @Test
     fun `should return empty list`() {
         logger.info { "TEST: should return empty list" }
-        val list = testRestTemplate.getForObject(helloEndpointUrl, List::class.java)
+        val list = testRestTemplate.getForObject(ringsEndpointUrl, List::class.java)
         assertThat(list.isEmpty())
     }
 
+    // TODO
     // add db record 1
     // get db records count = 1
     // with reuse flag - this fill fail next time the test runs

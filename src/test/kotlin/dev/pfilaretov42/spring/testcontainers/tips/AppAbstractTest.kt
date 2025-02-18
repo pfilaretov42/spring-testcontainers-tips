@@ -24,13 +24,6 @@ abstract class AppAbstractTest {
     @Autowired
     protected lateinit var testRestTemplate: TestRestTemplate
 
-    protected lateinit var helloEndpointUrl: String
-
-    @BeforeEach
-    fun setUp() {
-        helloEndpointUrl = "http://localhost:$port/hello"
-    }
-
     companion object {
         private val postgresContainer = PostgreSQLContainer(DockerImageName.parse("postgres:17"))
 
@@ -39,16 +32,16 @@ abstract class AppAbstractTest {
             postgresContainer.start()
         }
 
-        @JvmStatic
-        @AfterAll
-        fun tearDown() {
-            logger.info { "STOPPING CONTAINER" }
-            postgresContainer.stop()
-        }
-
+//        @JvmStatic
+//        @AfterAll
+//        fun tearDown() {
+//            logger.info { "STOPPING CONTAINER" }
+//            postgresContainer.stop()
+//        }
+//
 //        @JvmStatic
 //        @BeforeAll
-//        fun setUp() {
+//        fun setUpAll() {
 //            logger.info { "STARTING CONTAINER" }
 //            postgresContainer.start()
 //        }

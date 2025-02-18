@@ -7,45 +7,44 @@ import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-// TODO - rename hello to something
 @RestController
-@RequestMapping("/hello")
-class HelloController(
-    private val helloService: HelloService,
+@RequestMapping("/rings")
+class RingController(
+    private val ringService: RingService,
 ) {
 
     @GetMapping
     fun getAll(): List<String> {
-        return helloService.getAll().map { "${it.name}: ${it.id}" }
+        return ringService.getAll().map { "${it.name}: ${it.id}" }
     }
 
     @PostMapping
-    fun addHello(@RequestBody dto: HelloDto): Unit {
-        helloService.addHello(dto.name)
+    fun forge(@RequestBody dto: RingDto): Unit {
+        ringService.forge(dto.name)
     }
 }
 
-class HelloDto(val name: String)
+class RingDto(val name: String)
 
 @Service
-class HelloService(
-    private val helloRepository: HelloRepository,
+class RingService(
+    private val ringRepository: RingRepository,
 ) {
 
-    fun addHello(name: String) {
-        helloRepository.save(HelloEntity(name = name))
+    fun forge(name: String) {
+        ringRepository.save(RingEntity(name = name))
     }
 
     // Returns entity objects instead of DTO here for simplicity
-    fun getAll(): List<HelloEntity> {
-        return helloRepository.findAll().toList()
+    fun getAll(): List<RingEntity> {
+        return ringRepository.findAll().toList()
     }
 }
 
-interface HelloRepository : CrudRepository<HelloEntity, Int>
+interface RingRepository : CrudRepository<RingEntity, Int>
 
-@Table("hello")
-class HelloEntity(
+@Table("rings")
+class RingEntity(
     /**
      * [id] is auto generated in the DB.
      * Spring Data JDBC will perform add during [save()] if [id] is [null] or [id] == 0.

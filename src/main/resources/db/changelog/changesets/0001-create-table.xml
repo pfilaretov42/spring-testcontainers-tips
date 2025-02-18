@@ -15,7 +15,7 @@
     </changeSet>
 
     <changeSet id="create table" author="pfilaretov42">
-        <createTable tableName="hello">
+        <createTable tableName="rings">
             <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

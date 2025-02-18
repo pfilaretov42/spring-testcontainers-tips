@@ -1,10 +1,10 @@
 ### GET all
-GET http://localhost:8080/hello
+GET http://localhost:8080/rings
 
 ### add
-POST http://localhost:8080/hello
+POST http://localhost:8080/rings
 Content-Type: application/json
 
 {
-  "name": "Hello-2"
+  "name": "Nenya"
 }

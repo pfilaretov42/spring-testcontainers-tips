@@ -1,0 +1,31 @@
+package dev.pfilaretov42.spring.testcontainers.tips
+
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
+private val logger = KotlinLogging.logger {}
+
+class SilmarilliApiTest : AppAbstractTest() {
+
+    protected lateinit var silmarilliEndpointUrl: String
+
+    @BeforeEach
+    fun setUp() {
+        silmarilliEndpointUrl = "http://localhost:$port/silmarilli"
+    }
+
+    // TODO - drop it
+    @Test
+    fun `should return empty list`() {
+        logger.info { "TEST: should return empty list" }
+        val list = testRestTemplate.getForObject(silmarilliEndpointUrl, List::class.java)
+        assertThat(list.isEmpty())
+    }
+
+    // TODO
+    // add db record 1
+    // get db records count = 1
+    // with reuse flag - this fill fail next time the test runs
+}
