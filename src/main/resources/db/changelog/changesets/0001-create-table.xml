@@ -23,6 +23,15 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <createTable tableName="silmarilli">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fate" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
     </changeSet>
 
 </databaseChangeLog>

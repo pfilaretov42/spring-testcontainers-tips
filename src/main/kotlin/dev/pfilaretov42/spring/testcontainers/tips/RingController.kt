@@ -1,50 +1,75 @@
 package dev.pfilaretov42.spring.testcontainers.tips
 
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.data.repository.CrudRepository
-import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 @RequestMapping("/rings")
 class RingController(
-    private val ringService: RingService,
+    private val celebrimbor: ElvenSmith<Ring>,
 ) {
+
+    @PostMapping
+    fun forge(): Unit {
+        celebrimbor.forgeTheThreeRings()
+    }
 
     @GetMapping
     fun getAll(): List<String> {
-        return ringService.getAll().map { "${it.name}: ${it.id}" }
-    }
-
-    @PostMapping
-    fun forge(@RequestBody dto: RingDto): Unit {
-        ringService.forge(dto.name)
+        return celebrimbor.getAllTreasures().map { it.name }
     }
 }
 
-class RingDto(val name: String)
-
-@Service
-class RingService(
-    private val ringRepository: RingRepository,
+open class ElvenSmith<TREASURE>(
+    private val treasury: CrudRepository<TREASURE, UUID>
 ) {
+    open fun forgeTheThreeRings() {
+        throw UnsupportedOperationException("I cannot do that")
+    }
 
-    fun forge(name: String) {
-        ringRepository.save(RingEntity(name = name))
+    open fun craftSilmarilli() {
+        throw UnsupportedOperationException("I cannot do that")
     }
 
     // Returns entity objects instead of DTO here for simplicity
-    fun getAll(): List<RingEntity> {
-        return ringRepository.findAll().toList()
+    fun getAllTreasures(): List<TREASURE> {
+        return treasury.findAll().toList()
     }
 }
 
-interface RingRepository : CrudRepository<RingEntity, Int>
+@Configuration
+class ElvenConfig {
+    @Bean
+    fun celebrimbor(treasury: RingTreasury): ElvenSmith<Ring> = object : ElvenSmith<Ring>(treasury) {
+        @Transactional
+        override fun forgeTheThreeRings() {
+            treasury.save(Ring(name = "Narya"))
+            treasury.save(Ring(name = "Nenya"))
+            treasury.save(Ring(name = "Vilya"))
+        }
+    }
+
+    @Bean
+    fun fëanor(treasury: SilmarilTreasury): ElvenSmith<Silmaril> = object : ElvenSmith<Silmaril>(treasury) {
+        @Transactional
+        override fun craftSilmarilli() {
+            treasury.save(Silmaril(fate = "Air"))
+            treasury.save(Silmaril(fate = "Earth"))
+            treasury.save(Silmaril(fate = "Water"))
+        }
+    }
+}
+
+interface RingTreasury : CrudRepository<Ring, UUID>
 
 @Table("rings")
-class RingEntity(
+class Ring(
     /**
      * [id] is auto generated in the DB.
      * Spring Data JDBC will perform add during [save()] if [id] is [null] or [id] == 0.
