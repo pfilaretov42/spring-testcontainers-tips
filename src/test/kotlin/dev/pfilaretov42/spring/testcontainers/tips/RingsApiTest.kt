@@ -4,38 +4,24 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.web.client.postForObject
 
 private val logger = KotlinLogging.logger {}
 
 class RingsApiTest : AppAbstractTest() {
 
-    protected lateinit var ringsEndpointUrl: String
+    protected lateinit var endpointUrl: String
 
     @BeforeEach
     fun setUp() {
-        ringsEndpointUrl = "http://localhost:$port/rings"
+        endpointUrl = "http://localhost:$port/rings"
     }
 
-    // TODO - drop it
     @Test
-    fun `should return empty list`() {
-        logger.info { "TEST: should return empty list" }
-        val list = testRestTemplate.getForObject(ringsEndpointUrl, List::class.java)
-        assertThat(list.isEmpty())
+    fun `should forge the three rings`() {
+        logger.info { "TEST: should forge the three rings" }
+        testRestTemplate.postForObject<Unit>(endpointUrl, null)
+        val list = testRestTemplate.getForObject(endpointUrl, List::class.java)
+        assertThat(list.size).isEqualTo(3)
     }
-
-    // TODO
-    // add db record 1
-    // get db records count = 1
-    // with reuse flag - this fill fail next time the test runs
-//    @Test
-//    fun `reuse`() {
-//        // add record via api
-//        // get all records via api
-//        // check that count = 1
-//        // several test runs should be fine
-//
-//        // then add reuse flag - run tests two times and the second time it should fail -
-//        // because container is not stopping between tests
-//    }
 }
