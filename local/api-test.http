@@ -1,10 +1,13 @@
-### GET all
+### forge Rings
+POST http://localhost:8080/rings
+
+### get all Rings
 GET http://localhost:8080/rings
 
-### add
-POST http://localhost:8080/rings
-Content-Type: application/json
+### craft Silmarilli
+POST http://localhost:8080/silmarilli
 
-{
-  "name": "Nenya"
-}
+### get all Silmarilli
+GET http://localhost:8080/silmarilli
+
+
