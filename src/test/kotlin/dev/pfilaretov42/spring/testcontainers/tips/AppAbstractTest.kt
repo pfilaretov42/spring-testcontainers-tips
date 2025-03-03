@@ -24,34 +24,19 @@ abstract class AppAbstractTest {
     @Autowired
     protected lateinit var testRestTemplate: TestRestTemplate
 
-//    @Autowired
-//    protected lateinit var ringTreasury: RingTreasury
+    @Autowired
+    protected lateinit var ringTreasury: RingTreasury
 
-//    @Autowired
-//    protected lateinit var silmarilTreasury: SilmarilTreasury
+    @Autowired
+    protected lateinit var silmarilTreasury: SilmarilTreasury
 
     companion object {
         private val postgresContainer = PostgreSQLContainer(DockerImageName.parse("postgres:17"))
-            .withReuse(true)
 
         init {
             logger.info { "STARTING CONTAINER" }
             postgresContainer.start()
         }
-
-//        @JvmStatic
-//        @BeforeAll
-//        fun setUpAll() {
-//            logger.info { "STARTING CONTAINER" }
-//            postgresContainer.start()
-//        }
-
-//        @JvmStatic
-//        @AfterAll
-//        fun tearDown() {
-//            logger.info { "STOPPING CONTAINER" }
-//            postgresContainer.stop()
-//        }
 
         @JvmStatic
         @DynamicPropertySource
