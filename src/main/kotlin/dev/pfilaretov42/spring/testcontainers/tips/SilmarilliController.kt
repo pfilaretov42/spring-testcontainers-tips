@@ -38,9 +38,7 @@ class Fëanor(
     }
 
     // Returns entity objects instead of DTO here for simplicity
-    override fun getAllTreasures(): List<Silmaril> {
-        return treasury.findAll().toList()
-    }
+    override fun getAllTreasures(): List<Silmaril> = treasury.findAll().toList()
 }
 
 interface SilmarilTreasury : CrudRepository<Silmaril, UUID>

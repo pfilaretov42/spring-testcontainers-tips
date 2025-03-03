@@ -15,6 +15,7 @@ class RingsApiTest : AppAbstractTest() {
     @BeforeEach
     fun setUp() {
         endpointUrl = "http://localhost:$port/rings"
+//        ringTreasury.deleteAll()
     }
 
     @Test

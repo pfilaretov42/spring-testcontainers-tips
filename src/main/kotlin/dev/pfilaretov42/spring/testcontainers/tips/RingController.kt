@@ -50,9 +50,7 @@ class Celebrimbor(
     }
 
     // Returns entity objects instead of DTO here for simplicity
-    override fun getAllTreasures(): List<Ring> {
-        return treasury.findAll().toList()
-    }
+    override fun getAllTreasures(): List<Ring> = treasury.findAll().toList()
 }
 
 interface RingTreasury : CrudRepository<Ring, UUID>

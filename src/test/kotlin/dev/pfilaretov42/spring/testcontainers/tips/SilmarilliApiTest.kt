@@ -15,6 +15,7 @@ class SilmarilliApiTest : AppAbstractTest() {
     @BeforeEach
     fun setUp() {
         endpointUrl = "http://localhost:$port/silmarilli"
+//        silmarilTreasury.deleteAll()
     }
 
     @Test
