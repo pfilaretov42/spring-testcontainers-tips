@@ -41,6 +41,10 @@ kotlin {
     }
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+
+    onOutput { descriptor, event ->
+        logger.lifecycle(event.message)
+    }
 }

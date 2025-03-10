@@ -19,9 +19,9 @@ class SilmarilliApiTest : AppAbstractTest() {
     }
 
     @Test
-    fun `should craft silmarilli`() {
-        logger.info { "TEST: should craft silmarilli" }
-        testRestTemplate.postForObject<Unit>(endpointUrl, null)
+    fun `should craft Silmarilli`() {
+        logger.info { "TEST: should craft Silmarilli" }
+        testRestTemplate.postForObject<Unit>(endpointUrl, "{}")
         val list = testRestTemplate.getForObject(endpointUrl, List::class.java)
         assertThat(list.size).isEqualTo(3)
     }

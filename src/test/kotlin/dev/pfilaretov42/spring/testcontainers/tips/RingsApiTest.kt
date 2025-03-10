@@ -21,7 +21,7 @@ class RingsApiTest : AppAbstractTest() {
     @Test
     fun `should forge the three rings`() {
         logger.info { "TEST: should forge the three rings" }
-        testRestTemplate.postForObject<Unit>(endpointUrl, null)
+        testRestTemplate.postForObject<Unit>(endpointUrl, "{}")
         val list = testRestTemplate.getForObject(endpointUrl, List::class.java)
         assertThat(list.size).isEqualTo(3)
     }
